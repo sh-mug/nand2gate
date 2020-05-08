@@ -21,8 +21,8 @@ for N in range(2, 15): # num of NANDs
     for i in range(I, I + N):
         x = []
         for a in range(i):
-            for b in range(i):
-                for c in range(i):
+            for b in range(a, i):
+                for c in range(b, i):
                     # use 3-input NAND
                     x.append(And(p[i] == ~(p[a] & p[b] & p[c]),
                     r[i][0] == a, r[i][1] == b, r[i][2] == c))
