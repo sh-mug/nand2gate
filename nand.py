@@ -10,7 +10,7 @@ P = 3 # num of NAND inputs
 for N in range(1, 10): # num of NANDs
     S = Solver()
     p = [BitVec('p_%d' % i, (1 << I)) for i in range(N + I)]
-    r = [[Int('r_%d_%d' % (i, j)) for j in range(P)] for i in range(N + I)]
+    r = [[Int('r_%02d_%d' % (i, j)) for j in range(P)] for i in range(N + I)]
 
     for i in range(I):
         k = 0
@@ -39,6 +39,6 @@ for N in range(1, 10): # num of NANDs
         cnt = 1
         for i in rs:
             print(name(S.model()[i].as_long()),
-                end=' ' if cnt % P != 0 else ' -> %s\n' % name(int(i.name()[2])))
+                end=' ' if cnt % P != 0 else ' -> %s\n' % name(int(i.name()[2:4])))
             cnt += 1
         break
