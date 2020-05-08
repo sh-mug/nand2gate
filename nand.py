@@ -7,7 +7,7 @@ def name(i):
 I = 3 # num of curcuit inputs
 P = 3 # num of NAND inputs
 
-for N in range(1, 10): # num of NANDs
+for N in range(2, 15): # num of NANDs
     S = Solver()
     p = [BitVec('p_%d' % i, (1 << I)) for i in range(N + I)]
     r = [[Int('r_%02d_%d' % (i, j)) for j in range(P)] for i in range(N + I)]
@@ -28,8 +28,10 @@ for N in range(1, 10): # num of NANDs
                     r[i][0] == a, r[i][1] == b, r[i][2] == c))
         S.add(Or(x))
 
-    # 3-input XNOR
-    S.add(p[I + N - 1] == ~(p[0] ^ p[1] ^ p[2]))
+    # Sum
+    S.add(p[I + N - 1] == p[0] ^ p[1] ^ p[2])
+    # Carry
+    S.add(p[I + N - 2] == ((p[0] & p[1]) | (p[0] & p[2]) | (p[1] & p[2])))
 
     if S.check() == sat:
         rs = []
