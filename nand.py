@@ -12,12 +12,14 @@ for N in range(1, 10): # num of NANDs
     p = [BitVec('p_%d' % i, (1 << I)) for i in range(N + I)]
     r = [[Int('r_%02d_%d' % (i, j)) for j in range(P)] for i in range(N + I)]
 
+    # generate input part of the truth table
     for i in range(I):
         k = 0
         for j in range(1 << I):
             k |= ((j & (1 << i)) > 0) << j
         S.add(p[i] == k)
 
+    # [I, I+N)-th NAND takes the earlier (a, b, c-th) signals as input
     for i in range(I, I + N):
         x = []
         for a in range(i):
